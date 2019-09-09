@@ -2,7 +2,7 @@
 - hosts: batch11
   become: true
   vars_files:
-    - ./app_vars.yml
+    - /home/ansible1/app_vars.yml
   tasks:
 
     - name: Installing apache
