@@ -1,0 +1,24 @@
+---
+- hosts: batch11
+  become: true
+  vars_files:
+    - ./vars/app_vars2.yml
+  tasks:
+
+    - name: Installing apache
+      yum: name=httpd state=present
+
+    - name: Installing git
+      yum: name=git state=present
+
+    - name: Start service httpd
+      service:
+        name: httpd
+        enabled: true
+        state: started
+
+    - name: clone SCM
+      git:
+        repo: "{{git_url}}" 
+        dest: "{{deployment_dir}}"
+        force: yes

@@ -1,0 +1,7 @@
+---
+- hosts: 192.168.134.130
+  become: true
+  tasks:
+    - name: Removing git
+      yum: name=git,httpd,wget state=absent
+

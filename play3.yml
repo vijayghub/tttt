@@ -1,0 +1,11 @@
+---
+- hosts: 192.168.134.130
+  become: true
+  tasks:
+    - name: Installing packages
+      yum: name={{item}} state=latest
+      with_items:
+       - git
+       - wget
+       - httpd
+

@@ -1,0 +1,35 @@
+---
+- hosts: batch11
+  become: true
+  tasks:
+    - name: Removing git
+      yum: name=git state=absent
+
+    - name: Installing git
+      yum: name=git state=present
+
+    - name: Installing apache
+      yum: name=httpd state=present
+      tags:
+        - install 
+
+    - name: Start service httpd, if not started
+      service:
+        name: httpd
+        state: started
+      tags:
+        - startserver
+
+    - name: copy data fron ansible server
+      copy:
+        src: /opt/vijay10 
+        dest: /var
+      tags:
+        - copy
+      notify: Restart apache
+
+  handlers:
+    - name: Restart apache
+      service: 
+        name: httpd
+        state: restarted  

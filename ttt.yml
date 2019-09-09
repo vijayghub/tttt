@@ -1,0 +1,22 @@
+---
+- hosts: batch11
+  become: true
+  tasks:
+
+    - name: Installing apache
+      yum: name=httpd state=present
+
+    - name: Installing git
+      yum: name=git state=present
+
+    - name: Start service httpd
+      service:
+        name: httpd
+        enabled: true
+        state: started
+
+    - name: clone SCM
+      git:
+        repo: https://github.com/vijayghub/Static-Website
+        dest: /var/www/html/
+        force: yes
