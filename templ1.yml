@@ -1,0 +1,28 @@
+---
+- hosts: batch11
+  become: true
+  vars:
+   - http_port: 8090
+  tasks:
+
+    - name: Installing apache
+      yum: name=httpd state=present
+
+    - name: Installing git
+      yum: name=git state=present
+
+    - name: Start service httpd and enable on Reboot
+      service:
+        name: httpd
+        enabled: true
+        state: started
+
+    - name: clone/pull website from Git and deploy
+      git:
+        repo: https://github.com/vijayghub/Static-Website
+        dest: /var/www/html/
+        force: yes
+    - name: copy httpd.conf to Apache server
+      template:
+        src: ./files/httpd.conf
+        dest: /etc/httpd/conf/httpd.conf
